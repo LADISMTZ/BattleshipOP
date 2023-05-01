@@ -176,7 +176,7 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
                 }
 
                 if (selecrenglon > 10 || seleccolumna > 10) {
-                    execl("/home/ladislao/Desktop/opcionInvalida","",NULL);} else {
+                    execl("opcionInvalida","",NULL);} else {
                     tablero[selecrenglon + 1][seleccolumna + 1] = '$';
                 }
 
@@ -209,7 +209,7 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
                         }
 
                         if (selecrenglon > 10 || seleccolumna > 10) {
-                            execl("/home/ladislao/Desktop/opcionInvalida","",NULL);} else {
+                            execl("opcionInvalida","",NULL);} else {
                             tablero[selecrenglon + 1][seleccolumna + 1] = '$';
                             tablero[selecrenglon + 1][seleccolumna + 2] = '$';
                         }
@@ -233,7 +233,7 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
                         }
 
                         if (selecrenglon > 10 || seleccolumna > 10) {
-                            execl("/home/ladislao/Desktop/opcionInvalida","",NULL);} else {
+                            execl("opcionInvalida","",NULL);} else {
                             tablero[selecrenglon + 1][seleccolumna + 1] = '$';
                             tablero[selecrenglon + 2][seleccolumna + 1] = '$';
                         }
@@ -271,7 +271,7 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
                         }
 
                         if (selecrenglon > 10 || seleccolumna > 10) {
-                            execl("/home/ladislao/Desktop/opcionInvalida","",NULL);} else {
+                            execl("opcionInvalida","",NULL);} else {
                             tablero[selecrenglon + 1][seleccolumna + 1] = '$';
                             tablero[selecrenglon + 1][seleccolumna + 2] = '$';
                             tablero[selecrenglon + 1][seleccolumna + 3] = '$';
@@ -296,7 +296,7 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
                         }
 
                         if (selecrenglon > 10 || seleccolumna > 10) {
-                            execl("/home/ladislao/Desktop/opcionInvalida","",NULL);} else {
+                            execl("opcionInvalida","",NULL);} else {
                             tablero[selecrenglon + 1][seleccolumna + 1] = '$';
                             tablero[selecrenglon + 2][seleccolumna + 1] = '$';
                             tablero[selecrenglon + 3][seleccolumna + 1] = '$';
