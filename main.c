@@ -9,10 +9,13 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <stdlib.h>
+#include <semaphore.h>
 
 #define FILAS 11
 #define COLUMNAS 11
 int b1 =0,b2=0,b3=0, error=0;
+int semcont = 0;
+sem_t semaforo;
 
 
 void signal_handler(int signum)
@@ -123,8 +126,12 @@ void llenarTablero(char tablero[FILAS][COLUMNAS]){
 
 
 void *contador (){
+
     if (b1>2 || b2>2 || b3>2){
+        sem_wait(&semaforo);
        error = 1;
+       semcont++;
+        sem_post(&semaforo);
     }//end if
     pthread_exit(NULL);
 
@@ -155,14 +162,26 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
             case 1:
                 printf("Has seleccionado el barco chico\n");
                 b1++;
-                printf("Ingresa el renglon donde lo pondras: ");
+                printf("Ingresa el renglon donde lo pondras (0-9): ");
                 scanf("%i", &selecrenglon);
-                printf("\nIngresa la columna donde lo pondras: ");
+                printf("\nIngresa la columna donde lo pondras (0-9): ");
                 scanf("%i", &seleccolumna);
+
+                if (tablero[selecrenglon + 1][seleccolumna + 1] != '0') {
+                    system("clear");
+                    printf("Hay otro barco en esa posición.\n");
+                    alarm(2);
+                    pause();
+                    kill(getpid(),SIGKILL);
+                }
+
                 if (selecrenglon > 10 || seleccolumna > 10) {
                     execl("/home/ladislao/Desktop/opcionInvalida","",NULL);} else {
                     tablero[selecrenglon + 1][seleccolumna + 1] = '$';
                 }
+
+
+
                 break;
 
 
@@ -174,26 +193,51 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
 
                 switch (selec2) {
                     case 1:
-                        printf("\nIngresa el renglon donde lo pondras: ");
+                        printf("\nIngresa el renglon donde lo pondras (0-9): ");
                         scanf("%i", &selecrenglon);
-                        printf("Ingresa la columna donde lo pondras: ");
+                        printf("Ingresa la columna donde lo pondras (0-9): ");
                         scanf("%i", &seleccolumna);
+
+                        for (int i = 0; i < 2; i++) {
+                            if (tablero[selecrenglon + 1][seleccolumna + 1 + i] != '0') {
+                                system("clear");
+                                printf("Hay otro barco en esa posición.\n");
+                                alarm(2);
+                                pause();
+                                kill(getpid(),SIGKILL);
+                            }
+                        }
+
                         if (selecrenglon > 10 || seleccolumna > 10) {
                             execl("/home/ladislao/Desktop/opcionInvalida","",NULL);} else {
                             tablero[selecrenglon + 1][seleccolumna + 1] = '$';
                             tablero[selecrenglon + 1][seleccolumna + 2] = '$';
                         }
+
+
                         break;
                     case 2:
-                        printf("Ingresa el renglon donde lo pondras: ");
+                        printf("Ingresa el renglon donde lo pondras (0-9): ");
                         scanf("%i", &selecrenglon);
-                        printf("Ingresa la columna donde lo pondras: ");
+                        printf("Ingresa la columna donde lo pondras (0-9): ");
                         scanf("%i", &seleccolumna);
+
+                        for (int i = 0; i < 2; i++) {
+                            if (tablero[selecrenglon + 1+i][seleccolumna + 1] != '0') {
+                                system("clear");
+                                printf("Hay otro barco en esa posición.\n");
+                                alarm(2);
+                                pause();
+                                kill(getpid(),SIGKILL);
+                            }
+                        }
+
                         if (selecrenglon > 10 || seleccolumna > 10) {
                             execl("/home/ladislao/Desktop/opcionInvalida","",NULL);} else {
                             tablero[selecrenglon + 1][seleccolumna + 1] = '$';
                             tablero[selecrenglon + 2][seleccolumna + 1] = '$';
                         }
+
                         break;
                     default:
                         printf("Opcion no valida");
@@ -211,28 +255,53 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
 
                 switch (selec2) {
                     case 1:
-                        printf("\nIngresa el renglon donde lo pondras: ");
+                        printf("\nIngresa el renglon donde lo pondras (0-9): ");
                         scanf("%i", &selecrenglon);
-                        printf("Ingresa la columna donde lo pondras: ");
+                        printf("Ingresa la columna donde lo pondras (0-9): ");
                         scanf("%i", &seleccolumna);
+
+                        for (int i = 0; i < 3; i++) {
+                            if (tablero[selecrenglon + 1 + i][seleccolumna + 1] != '0') {
+                                system("clear");
+                                printf("Hay otro barco en esa posición.\n");
+                                alarm(2);
+                                pause();
+                                kill(getpid(),SIGKILL);
+                            }
+                        }
+
                         if (selecrenglon > 10 || seleccolumna > 10) {
                             execl("/home/ladislao/Desktop/opcionInvalida","",NULL);} else {
                             tablero[selecrenglon + 1][seleccolumna + 1] = '$';
                             tablero[selecrenglon + 1][seleccolumna + 2] = '$';
                             tablero[selecrenglon + 1][seleccolumna + 3] = '$';
                         }
+
+
                         break;
                     case 2:
-                        printf("Ingresa el renglon donde lo pondras: ");
+                        printf("Ingresa el renglon donde lo pondras (0-9): ");
                         scanf("%i", &selecrenglon);
-                        printf("Ingresa la columna donde lo pondras: ");
+                        printf("Ingresa la columna donde lo pondras (0-9): ");
                         scanf("%i", &seleccolumna);
+
+                        for (int i = 0; i < 3; i++) {
+                            if (tablero[selecrenglon + 1+i][seleccolumna + 1] != '0') {
+                                system("clear");
+                                printf("Hay otro barco en esa posición.\n");
+                                alarm(2);
+                                pause();
+                                kill(getpid(),SIGKILL);
+                            }
+                        }
+
                         if (selecrenglon > 10 || seleccolumna > 10) {
                             execl("/home/ladislao/Desktop/opcionInvalida","",NULL);} else {
                             tablero[selecrenglon + 1][seleccolumna + 1] = '$';
                             tablero[selecrenglon + 2][seleccolumna + 1] = '$';
                             tablero[selecrenglon + 3][seleccolumna + 1] = '$';
                         }
+
                         break;
                     default:
                         printf("\nOpcion no valida\n");
@@ -250,8 +319,10 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
         }//end switch
 
         //HILO ERROR
+        sem_init(&semaforo, 0, 1);
         pthread_create(&hiloA,NULL,contador,NULL);
         pthread_join(hiloA,NULL);
+        sem_destroy(&semaforo);
         if (error == 1){
             system("clear");
             printf("Solo se puede colocar un barco de cada numero\n");
@@ -412,6 +483,7 @@ int main(){
         kill(pidM,SIGUSR1);
         fd = creat("VictoriasJugador1.txt",777);
         n = write(fd,&num,sizeof(num));
+        verificar(n);
         close(n);
     }
 
@@ -420,6 +492,7 @@ int main(){
         kill(pidM,SIGUSR2);
         fd = creat("VictoriasJugador2.txt",777);
         n = write(fd,&num,sizeof(num));
+        verificar(n);
         close(n);
     }
 
@@ -427,75 +500,10 @@ int main(){
         fd = creat("Empates.txt",777);
         n = write(fd,&num,sizeof(num));
         close(n);
+        verificar(n);
         kill(pidM,SIGINT);
 
     }
     return 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-//CCOLOCAR BARCOS2
-void colocar_barco(char tablero[FILAS][COLUMNAS], int fila, int columna, int longitud, char orientacion) {
-
-    // Comprobamos que la posición sea válida
-    if (fila < 0 || fila >= 10 || columna < 0 || columna >= 10) {
-        printf("Posición fuera del tablero.\n");
-        return;
-    }
-
-    // CABE?
-    if ((orientacion == 'H' && columna + longitud > 10) || (orientacion == 'V' && fila + longitud > 10)) {
-        printf("El barco no cabe en esa posición.\n");
-        return;
-    }
-
-    // NO HAY OTRO BARCO
-    for (int i = 0; i < longitud; i++) {
-        if (orientacion == 'H' && tablero[fila][columna+i] != ' ') {
-            printf("Hay otro barco en esa posición.\n");
-            return;
-        } else if (orientacion == 'V' && tablero[fila+i][columna] != ' ') {
-            printf("Hay otro barco en esa posición.\n");
-            return;
-        }
-    }
-
-    // AQUI YA SE PUEDE COLOCAR
-    for (int i = 0; i < longitud; i++) {
-        if (orientacion == 'H') {
-            tablero[fila][columna+i] = '#';
-        } else if (orientacion == 'V') {
-            tablero[fila+i][columna] = '#';
-        }
-    }
-
-    printf("Barco colocado con éxito.\n");
-}
-*/
