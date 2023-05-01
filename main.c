@@ -123,7 +123,7 @@ void llenarTablero(char tablero[FILAS][COLUMNAS]){
 
 
 void *contador (){
-    if (b1>1 || b2>1 || b3>1){
+    if (b1>2 || b2>2 || b3>2){
        error = 1;
     }//end if
     pthread_exit(NULL);
