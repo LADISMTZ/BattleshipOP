@@ -12,6 +12,20 @@
 #define COLUMNAS 11
 
 
+
+void signal_handler(int signum)
+{
+    if (signum == SIGUSR1){
+        printf("Alarma recibida \n");
+
+        execl("/bin/ls","exit",NULL);
+    }
+
+
+}
+
+
+
 void llenarTablero(char tablero[FILAS][COLUMNAS]){
 //LLENAS TABLERO
     tablero[0][0]=' ';
@@ -71,7 +85,10 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
                 scanf("%i", &selecrenglon);
                 printf("\nIngresa la columna donde lo pondras: ");
                 scanf("%i", &seleccolumna);
-                tablero[selecrenglon + 1][seleccolumna + 1] = '$';
+                if (selecrenglon > 10 || seleccolumna > 10) {
+                    printf("\nOpcion no valida\n");} else {
+                    tablero[selecrenglon + 1][seleccolumna + 1] = '$';
+                }
                 break;
 
 
@@ -86,16 +103,22 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
                         scanf("%i", &selecrenglon);
                         printf("Ingresa la columna donde lo pondras: ");
                         scanf("%i", &seleccolumna);
-                        tablero[selecrenglon + 1][seleccolumna + 1] = '$';
-                        tablero[selecrenglon + 1][seleccolumna + 2] = '$';
+                        if (selecrenglon > 10 || seleccolumna > 10) {
+                            printf("\nOpcion no valida\n");} else {
+                            tablero[selecrenglon + 1][seleccolumna + 1] = '$';
+                            tablero[selecrenglon + 1][seleccolumna + 2] = '$';
+                        }
                         break;
                     case 2:
                         printf("Ingresa el renglon donde lo pondras: ");
                         scanf("%i", &selecrenglon);
                         printf("Ingresa la columna donde lo pondras: ");
                         scanf("%i", &seleccolumna);
-                        tablero[selecrenglon + 1][seleccolumna + 1] = '$';
-                        tablero[selecrenglon + 2][seleccolumna + 1] = '$';
+                        if (selecrenglon > 10 || seleccolumna > 10) {
+                            printf("\nOpcion no valida\n");} else {
+                            tablero[selecrenglon + 1][seleccolumna + 1] = '$';
+                            tablero[selecrenglon + 2][seleccolumna + 1] = '$';
+                        }
                         break;
                     default:
                         printf("Opcion no valida");
@@ -116,18 +139,24 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
                         scanf("%i", &selecrenglon);
                         printf("Ingresa la columna donde lo pondras: ");
                         scanf("%i", &seleccolumna);
-                        tablero[selecrenglon + 1][seleccolumna + 1] = '$';
-                        tablero[selecrenglon + 1][seleccolumna + 2] = '$';
-                        tablero[selecrenglon + 1][seleccolumna + 3] = '$';
+                        if (selecrenglon > 10 || seleccolumna > 10) {
+                            printf("\nOpcion no valida\n");} else {
+                            tablero[selecrenglon + 1][seleccolumna + 1] = '$';
+                            tablero[selecrenglon + 1][seleccolumna + 2] = '$';
+                            tablero[selecrenglon + 1][seleccolumna + 3] = '$';
+                        }
                         break;
                     case 2:
                         printf("Ingresa el renglon donde lo pondras: ");
                         scanf("%i", &selecrenglon);
                         printf("Ingresa la columna donde lo pondras: ");
                         scanf("%i", &seleccolumna);
-                        tablero[selecrenglon + 1][seleccolumna + 1] = '$';
-                        tablero[selecrenglon + 2][seleccolumna + 1] = '$';
-                        tablero[selecrenglon + 3][seleccolumna + 1] = '$';
+                        if (selecrenglon > 10 || seleccolumna > 10) {
+                            printf("\nOpcion no valida\n");} else {
+                            tablero[selecrenglon + 1][seleccolumna + 1] = '$';
+                            tablero[selecrenglon + 2][seleccolumna + 1] = '$';
+                            tablero[selecrenglon + 3][seleccolumna + 1] = '$';
+                        }
                         break;
                     default:
                         printf("\nOpcion no valida\n");
@@ -150,7 +179,7 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
 
 
 //ATACAR AL TABLERO CONTRARIO
-int atacar1 (char tablero[FILAS][COLUMNAS],int aciertos){
+int atacar1 (char tablero[FILAS][COLUMNAS],int aciertos) {
     int selecrenglon = 0, seleccolumna = 0;
 
     printf("\nSeleccione la coordenada a la cual atacara\n");
@@ -158,20 +187,24 @@ int atacar1 (char tablero[FILAS][COLUMNAS],int aciertos){
     scanf("%i", &selecrenglon);
     printf("Ingresa la columna: ");
     scanf("%i", &seleccolumna);
-    if (tablero[selecrenglon + 1][seleccolumna + 1] == '$'){
-        printf("\nUsted ha undido un barco");
-        tablero[selecrenglon + 1][seleccolumna + 1] = 'X';
-        sleep(2);
-        aciertos++;
-    }//end if
-    else {
-        printf("\nUsted ha fallado");
-        tablero[selecrenglon + 1][seleccolumna + 1] = 'F';
-        sleep(2);
-    }//end else
-    return aciertos;
-}//end atacar
 
+    if (selecrenglon > 10 || seleccolumna > 10) {
+        printf("\nOpcion no valida\n");
+    } else {
+        if (tablero[selecrenglon + 1][seleccolumna + 1] == '$') {
+            printf("\nUsted ha undido un barco");
+            tablero[selecrenglon + 1][seleccolumna + 1] = 'X';
+            sleep(2);
+            aciertos++;
+        }//end if
+        else {
+            printf("\nUsted ha fallado");
+            tablero[selecrenglon + 1][seleccolumna + 1] = 'F';
+            sleep(2);
+        }//end else
+        return aciertos;
+    }//end atacar
+}
 
 //ATACAR AL TABLERO CONTRARIO
 int atacar2 (char tablero[FILAS][COLUMNAS], int aciertos2){
@@ -223,21 +256,29 @@ int main(){
     char tablero1[FILAS][COLUMNAS];
     char tablero2[FILAS][COLUMNAS];
     int aciertos = 0, aciertos2 = 0;
-
+    int status;
     //COOCAR BARCOS
-    printf("\nEs el turno de que el primer jugador coloque sus barcos\n");
-    llenarTablero(tablero1);
-    colocarBarcos(tablero1);
-    imprimir(tablero1);
-    sleep(7);
-    system("clear");
-    printf("\nEs el turno de que el segundo jugador coloque sus barcos\n");
-    llenarTablero(tablero2);
-    colocarBarcos(tablero2);
-    imprimir(tablero2);
-    sleep(10);
-    system("clear");
-
+    pid_t pidM, pidA, pidB;
+    pidM = getpid();
+    pidA = fork();
+    if (pidA == 0){
+        printf("\nEs el turno de que el primer jugador coloque sus barcos\n");
+        llenarTablero(tablero1);
+        colocarBarcos(tablero1);
+        imprimir(tablero1);
+        sleep(7);
+        system("clear");
+        printf("\nEs el turno de que el segundo jugador coloque sus barcos\n");
+        llenarTablero(tablero2);
+        colocarBarcos(tablero2);
+        imprimir(tablero2);
+        sleep(10);
+        system("clear");
+        return 0;
+    }//end pidA
+    waitpid(pidA, &status, 0);
+    
+    
     //EMPIEZAN A JUGAR
     do{
     //turno jugador1
