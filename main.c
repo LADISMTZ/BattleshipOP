@@ -93,13 +93,13 @@ void verificar(int fd) {
 void llenarTablero(char tablero[FILAS][COLUMNAS]) {
 
     for (int i = 1; i < COLUMNAS; i++) {
-        tablero[0][i] = i - 1 + '0';
+        tablero[0][i] = i - 1;
     }
 
 
     tablero[0][0] = ' ';
     for (int i = 1; i < FILAS; i++) {
-        tablero[i][0] = i - 1 + '0';
+        tablero[i][0] = i - 1;
     }
 
 
@@ -377,18 +377,19 @@ void imprimir(char tablero[FILAS][COLUMNAS]) {
 
     for (int i = 1; i < COLUMNAS; i++) {
         printf(" ");
-        printf(" %d ", i - 1);
+        printf(" %d ", i - 1);//imprime 0-9 en la parte superior
     }
+    
     printf("\n\n\t");
-
     printf("+");
+    
     for (int i = 1; i < COLUMNAS; i++) {
         printf("---+");
     }
     printf("\n");
 
     for (int i = 1; i < FILAS; i++) {
-        printf("%d\t", i - 1);
+        printf("%d\t", i - 1);//imprime 0-9 lado izquierdo
         for (int j = 1; j < COLUMNAS; j++) {
             printf("| ");
             printf("%c ", tablero[i][j]);
