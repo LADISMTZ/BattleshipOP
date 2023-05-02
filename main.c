@@ -91,24 +91,24 @@ void verificar(int fd) {
 
 
 void llenarTablero(char tablero[FILAS][COLUMNAS]) {
-    // Llena el encabezado de la matriz con los números de columna
+
     for (int i = 1; i < COLUMNAS; i++) {
         tablero[0][i] = i - 1 + '0';
     }
 
-    // Llena el encabezado de la matriz con espacios
+
     tablero[0][0] = ' ';
     for (int i = 1; i < FILAS; i++) {
         tablero[i][0] = i - 1 + '0';
     }
 
-    // Llena el cuerpo de la matriz con espacios
+
     for (int i = 1; i < FILAS; i++) {
         for (int j = 1; j < COLUMNAS; j++) {
             tablero[i][j] = '0';
         }
     }
-}
+}//end llenar tablero
 
 
 
