@@ -90,39 +90,27 @@ void verificar(int fd) {
 }
 
 
-void llenarTablero(char tablero[FILAS][COLUMNAS]){
-//LLENAS TABLERO
-    tablero[0][0]=' ';
-    tablero[0][1]='0';
-    tablero[0][2]='1';
-    tablero[0][3]='2';
-    tablero[0][4]='3';
-    tablero[0][5]='4';
-    tablero[0][6]='5';
-    tablero[0][7]='6';
-    tablero[0][8]='7';
-    tablero[0][9]='8';
-    tablero[0][10]='9';
+void llenarTablero(char tablero[FILAS][COLUMNAS]) {
+    // Llena el encabezado de la matriz con los números de columna
+    for (int i = 1; i < COLUMNAS; i++) {
+        tablero[0][i] = i - 1 + '0';
+    }
 
-    tablero[1][0]='0';
-    tablero[2][0]='1';
-    tablero[3][0]='2';
-    tablero[4][0]='3';
-    tablero[5][0]='4';
-    tablero[6][0]='5';
-    tablero[7][0]='6';
-    tablero[8][0]='7';
-    tablero[9][0]='8';
-    tablero[10][0]='9';
+    // Llena el encabezado de la matriz con espacios
+    tablero[0][0] = ' ';
+    for (int i = 1; i < FILAS; i++) {
+        tablero[i][0] = i - 1 + '0';
+    }
+
+    // Llena el cuerpo de la matriz con espacios
+    for (int i = 1; i < FILAS; i++) {
+        for (int j = 1; j < COLUMNAS; j++) {
+            tablero[i][j] = '0';
+        }
+    }
+}
 
 
-    for (int i=1; i<FILAS; i++){
-        for (int j=1; j<COLUMNAS; j++){
-            tablero[i][j]='0';
-        }//end for
-    }//end for
-
-}//end llenarTablero
 
 
 void *contador (){
@@ -143,10 +131,6 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
     int count=1;
     pthread_t hiloA;
 
-
-
-
-
     do {
         int selec, selec2;
         int selecrenglon = 0, seleccolumna = 0;
@@ -157,8 +141,8 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
         printf("Barco grande(3)\nEscribe el numero correspondiente: ");
         scanf("%i", &selec);
 
+        //Ship size 1
         switch (selec) {
-
             case 1:
                 printf("Has seleccionado el barco chico\n");
                 b1++;
@@ -179,12 +163,9 @@ void colocarBarcos(char tablero[FILAS][COLUMNAS]){
                     execl("opcionInvalida","",NULL);} else {
                     tablero[selecrenglon + 1][seleccolumna + 1] = '$';
                 }
-
-
-
                 break;
 
-
+                //Ship size 2
             case 2:
                 printf("Has seleccionado el barco mediano\n");
                 b2++;
@@ -352,9 +333,9 @@ int atacar1 (char tablero[FILAS][COLUMNAS],int aciertos) {
         printf("\nOpcion no valida\n");
     } else {
         if (tablero[selecrenglon + 1][seleccolumna + 1] == '$') {
-            printf("\nUsted ha undido un barco");
+            printf("Usted ha undido un barco");
             tablero[selecrenglon + 1][seleccolumna + 1] = 'X';
-            sleep(2);
+            sleep(4);
             aciertos++;
         }//end if
         else {
@@ -384,30 +365,43 @@ int atacar2 (char tablero[FILAS][COLUMNAS], int aciertos2){
     else {
         printf("\nUsted ha fallado");
         tablero[selecrenglon + 1][seleccolumna + 1] = 'F';
-        sleep(2);
+        sleep(5);
     }//end else
     return aciertos2;
 }//end atacar
 
 
 
+void imprimir(char tablero[FILAS][COLUMNAS]) {
+    printf("\n\t");
 
-//IMPRIMES TABLERO
-void imprimir(char tablero[FILAS][COLUMNAS]){
+    for (int i = 1; i < COLUMNAS; i++) {
+        printf(" ");
+        printf(" %d ", i - 1);
+    }
+    printf("\n\n\t");
 
-    for (int i=0; i<FILAS; i++){
-        for (int j=0; j<COLUMNAS; j++){
-            printf("\t");
-            printf("%c",tablero[i][j]);
-            printf("\t");
-        }//end for
+    printf("+");
+    for (int i = 1; i < COLUMNAS; i++) {
+        printf("---+");
+    }
+    printf("\n");
+
+    for (int i = 1; i < FILAS; i++) {
+        printf("%d\t", i - 1);
+        for (int j = 1; j < COLUMNAS; j++) {
+            printf("| ");
+            printf("%c ", tablero[i][j]);
+        }
+        printf("|\n\t");
+
+        printf("+");
+        for (int i = 1; i < COLUMNAS; i++) {
+            printf("---+");
+        }
         printf("\n");
-    }//end for
-
-
-}//end imprimir
-
-
+    }
+}
 
 
 
@@ -416,7 +410,7 @@ int main(){
     char tablero1[FILAS][COLUMNAS];
     char tablero2[FILAS][COLUMNAS];
     int aciertos = 0, aciertos2 = 0;
-    int status, fd, n, m;
+    int status, fd, n;
     int num = 1;
 
     signal(SIGINT,signal_handler);
@@ -424,7 +418,7 @@ int main(){
     signal(SIGUSR2, signal_handler);
     signal(SIGALRM, signal_handler);
 
-    //COOCAR BARCOS
+    //PUT SHIPS
     pid_t pidM, pidA, pidB;
     pidM = getpid();
 
@@ -457,7 +451,7 @@ int main(){
             pause();
 
 
-    //EMPIEZAN A JUGAR
+    //START PLAYING
     do{
     //turno jugador1
     printf("\nTurno jugador1 \n");
